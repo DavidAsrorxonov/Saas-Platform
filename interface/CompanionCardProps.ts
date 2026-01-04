@@ -4,5 +4,4 @@ interface CompanionCardProps {
   topic: string;
   subject: string;
   duration: number;
-  color: string;
 }

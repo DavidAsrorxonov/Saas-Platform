@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 
 export default function Home() {
   return (
-    <main>
+    <main className="mx-auto px-14 flex flex-col gap-8 bg-background h-full max-w-[1400px] pt-10 max-sm:px-2 mb-5">
       <h1 className="text-3xl font-bold">Popular Companions</h1>
       <section className="flex gap-4 justify-between items-start w-full max-lg:flex-col-reverse max-lg:items-center">
         <CompanionCard
@@ -14,7 +14,6 @@ export default function Home() {
           topic="Coding"
           subject="AI"
           duration={40}
-          color="#0ea5e9"
         />
         <CompanionCard
           id="124"
@@ -22,7 +21,6 @@ export default function Home() {
           topic="Coding"
           subject="AI"
           duration={40}
-          color="#0ea5e9"
         />
         <CompanionCard
           id="125"
@@ -30,7 +28,6 @@ export default function Home() {
           topic="Coding"
           subject="AI"
           duration={40}
-          color="#0ea5e9"
         />
       </section>
 
