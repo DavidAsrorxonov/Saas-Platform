@@ -8,7 +8,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import CompanionListProps from "@/interface/CompanionListProps";
-import { cn } from "@/lib/utils";
+import { cn, getSubjectColor } from "@/lib/utils";
+import Image from "next/image";
 import Link from "next/link";
 
 const CompanionsList = ({
@@ -31,11 +32,27 @@ const CompanionsList = ({
           </TableRow>
         </TableHeader>
         <TableBody>
-          {companions?.map((companion) => (
-            <TableRow key={companion.id}>
+          {companions?.map(({ id, subject, name, topic, duration }) => (
+            <TableRow key={id}>
               <TableCell>
-                <Link href={`/companions/${companion.id}`}>
-                  {companion.subject}
+                <Link href={`/companions/${id}`}>
+                  <div className="flex items-center gap-2">
+                    <div
+                      className="size-18 flex items-center justify-center max-md:hidden"
+                      style={{ backgroundColor: getSubjectColor(subject) }}
+                    >
+                      <Image
+                        src={`/icons/${subject}.svg`}
+                        alt={subject}
+                        width={35}
+                        height={35}
+                      />
+                    </div>
+
+                    <div className="flex flex-col gap-2">
+                      <p></p>
+                    </div>
+                  </div>
                 </Link>
               </TableCell>
             </TableRow>
