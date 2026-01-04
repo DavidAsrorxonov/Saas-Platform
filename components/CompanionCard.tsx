@@ -1,6 +1,13 @@
 import React from "react";
 
-const CompanionCard = () => {
+const CompanionCard = ({
+  id,
+  name,
+  topic,
+  subject,
+  duration,
+  color,
+}: CompanionCardProps) => {
   return <div>CompanionCard</div>;
 };
 
