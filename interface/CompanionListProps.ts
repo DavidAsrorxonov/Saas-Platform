@@ -1,8 +1,6 @@
-import { RecentSessionsProps } from "@/types/recentSessions";
-
 interface CompanionListProps {
   title: string;
-  companions: RecentSessionsProps;
+  companions?: Companion[];
   classNames: string;
 }
 
