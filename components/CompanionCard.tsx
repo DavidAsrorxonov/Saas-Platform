@@ -13,10 +13,10 @@ const CompanionCard = ({
   duration,
 }: CompanionCardProps) => {
   return (
-    <article className="flex flex-col rounded-4xl border px-4 py-4 gap-5 w-full lg:max-w-102.5 justify-between">
+    <article className="flex flex-col border px-4 py-4 gap-5 w-full lg:max-w-102.5 justify-between">
       <div className="flex justify-between items-center">
         <Badge>{subject}</Badge>
-        <Button className="rounded-4xl border">
+        <Button className="border">
           <Bookmark size="14" />
         </Button>
       </div>
