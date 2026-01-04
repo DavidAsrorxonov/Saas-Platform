@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
+import Navbar from "@/components/Navbar";
 
 const myFont = localFont({
   src: [
@@ -62,7 +63,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={myFont.variable}>
-      <body>{children}</body>
+      <body>
+        <Navbar />
+        {children}
+      </body>
     </html>
   );
 }
