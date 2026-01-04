@@ -2,6 +2,7 @@ import CompanionCard from "@/components/CompanionCard";
 import CompanionsList from "@/components/CompanionsList";
 import CTA from "@/components/CTA";
 import { Button } from "@/components/ui/button";
+import { recentSessions } from "@/constants/recentSessions";
 
 export default function Home() {
   return (
@@ -32,7 +33,11 @@ export default function Home() {
       </section>
 
       <section className="flex gap-4 justify-between items-start w-full max-lg:flex-col-reverse max-lg:items-center">
-        <CompanionsList />
+        <CompanionsList
+          title="Recently Completed Sessions"
+          companions={recentSessions}
+          classNames="w-2/3 max-lg:w-full"
+        />
         <CTA />
       </section>
     </main>
