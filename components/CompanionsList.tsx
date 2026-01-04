@@ -12,6 +12,7 @@ import { cn, getSubjectColor } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 import { Badge } from "./ui/badge";
+import { Clock } from "lucide-react";
 
 const CompanionsList = ({
   title,
@@ -69,6 +70,14 @@ const CompanionsList = ({
                     width={18}
                     height={18}
                   />
+                </div>
+              </TableCell>
+              <TableCell>
+                <div className="flex items-center gap-2 w-full justify-end">
+                  <p className="text-2xl">
+                    {duration} <span className="max-md:hidden">mins</span>
+                  </p>
+                  <Clock size={20} className="md:hidden" />
                 </div>
               </TableCell>
             </TableRow>
