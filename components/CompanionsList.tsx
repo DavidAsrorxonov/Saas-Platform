@@ -11,6 +11,7 @@ import CompanionListProps from "@/interface/CompanionListProps";
 import { cn, getSubjectColor } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
+import { Badge } from "./ui/badge";
 
 const CompanionsList = ({
   title,
@@ -50,10 +51,25 @@ const CompanionsList = ({
                     </div>
 
                     <div className="flex flex-col gap-2">
-                      <p></p>
+                      <p className="font-bold text-2xl">{name}</p>
+                      <p className="text-lg">{topic}</p>
                     </div>
                   </div>
                 </Link>
+              </TableCell>
+              <TableCell>
+                <Badge className="w-fit max-md:hidden">{subject}</Badge>
+                <div
+                  className="flex items-center justify-center w-fit p-2 md:hidden"
+                  style={{ backgroundColor: getSubjectColor(subject) }}
+                >
+                  <Image
+                    src={`/icons/${subject}.svg`}
+                    alt={subject}
+                    width={18}
+                    height={18}
+                  />
+                </div>
               </TableCell>
             </TableRow>
           ))}
