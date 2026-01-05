@@ -4,11 +4,13 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
 import { ThemeProvider } from "@/components/theme-provider";
 import { useTheme } from "next-themes";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
-export default function Providers({ children }: { children: React.ReactNode }) {
+function ClerkThemeSync({ children }: { children: React.ReactNode }) {
   const { resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
+
+  console.log(resolvedTheme);
 
   useEffect(() => setMounted(true), []);
 
@@ -17,20 +19,29 @@ export default function Providers({ children }: { children: React.ReactNode }) {
   return (
     <ClerkProvider
       appearance={{
-        theme: resolvedTheme === "dark" ? dark : undefined,
+        baseTheme: resolvedTheme === "dark" ? dark : undefined,
         signIn: {
-          theme: resolvedTheme === "dark" ? dark : undefined,
+          baseTheme: resolvedTheme === "dark" ? dark : undefined,
+        },
+        pricingTable: {
+          baseTheme: resolvedTheme === "dark" ? dark : undefined,
         },
       }}
     >
-      <ThemeProvider
-        attribute={"class"}
-        defaultTheme="system"
-        enableSystem
-        disableTransitionOnChange
-      >
-        {children}
-      </ThemeProvider>
+      {children}
     </ClerkProvider>
+  );
+}
+
+export default function Providers({ children }: { children: React.ReactNode }) {
+  return (
+    <ThemeProvider
+      attribute="class"
+      defaultTheme="system"
+      enableSystem
+      disableTransitionOnChange
+    >
+      <ClerkThemeSync>{children}</ClerkThemeSync>
+    </ThemeProvider>
   );
 }
