@@ -15,7 +15,15 @@ import {
   FormMessage,
 } from "./ui/form";
 import { Input } from "./ui/input";
-import { Select, SelectContent, SelectTrigger, SelectValue } from "./ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "./ui/select";
+import { subjects } from "@/constants/subjects";
+import { Textarea } from "./ui/textarea";
 
 const formSchema = z.object({
   name: z.string().min(1, { message: "Companion name is required." }),
@@ -78,8 +86,35 @@ const CompanionForm = () => {
                   <SelectTrigger className="w-full capitalize">
                     <SelectValue placeholder="Select the subject" />
                   </SelectTrigger>
-                  <SelectContent>{}</SelectContent>
+                  <SelectContent>
+                    {subjects.map((subject, idx) => (
+                      <SelectItem
+                        value={subject}
+                        key={idx}
+                        className="capitalize"
+                      >
+                        {subject}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
                 </Select>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="topic"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>What should the companion help you with?</FormLabel>
+              <FormControl>
+                <Textarea
+                  placeholder="Ex. Derivatives & Integrals"
+                  className="w-full!"
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
