@@ -18,6 +18,9 @@ export default function Providers({ children }: { children: React.ReactNode }) {
     <ClerkProvider
       appearance={{
         theme: resolvedTheme === "dark" ? dark : undefined,
+        signIn: {
+          theme: resolvedTheme === "dark" ? dark : undefined,
+        },
       }}
     >
       <ThemeProvider
