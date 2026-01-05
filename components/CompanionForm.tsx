@@ -15,6 +15,7 @@ import {
   FormMessage,
 } from "./ui/form";
 import { Input } from "./ui/input";
+import { Select, SelectContent, SelectTrigger, SelectValue } from "./ui/select";
 
 const formSchema = z.object({
   name: z.string().min(1, { message: "Companion name is required." }),
@@ -69,11 +70,16 @@ const CompanionForm = () => {
             <FormItem>
               <FormLabel>Subject</FormLabel>
               <FormControl>
-                <Input
-                  placeholder="Enter the companion name"
-                  className="w-full!"
-                  {...field}
-                />
+                <Select
+                  onValueChange={field.onChange}
+                  value={field.value}
+                  defaultValue={field.value}
+                >
+                  <SelectTrigger className="w-full capitalize">
+                    <SelectValue placeholder="Select the subject" />
+                  </SelectTrigger>
+                  <SelectContent>{}</SelectContent>
+                </Select>
               </FormControl>
               <FormMessage />
             </FormItem>
