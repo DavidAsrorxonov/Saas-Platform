@@ -10,8 +10,6 @@ function ClerkThemeSync({ children }: { children: React.ReactNode }) {
   const { resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
-  console.log(resolvedTheme);
-
   useEffect(() => setMounted(true), []);
 
   if (!mounted) return null;
