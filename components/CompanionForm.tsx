@@ -42,7 +42,47 @@ const CompanionForm = () => {
     console.log(values);
   }
 
-  return <div>CompanionForm</div>;
+  return (
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <FormField
+          control={form.control}
+          name="name"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Companion Name</FormLabel>
+              <FormControl>
+                <Input
+                  placeholder="Enter the companion name"
+                  className="w-full!"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="subject"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Subject</FormLabel>
+              <FormControl>
+                <Input
+                  placeholder="Enter the companion name"
+                  className="w-full!"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button type="submit">Submit</Button>
+      </form>
+    </Form>
+  );
 };
 
 export default CompanionForm;
