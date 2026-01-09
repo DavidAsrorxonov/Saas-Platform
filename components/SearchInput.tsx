@@ -4,19 +4,26 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { InputGroup, InputGroupAddon, InputGroupInput } from "./ui/input-group";
 import { Search } from "lucide-react";
-
 import { formUrlQuery, removeKeysFromUrlQuery } from "@jsmastery/utils";
 
 const SearchInput = () => {
   const pathname = usePathname();
   const router = useRouter();
   const searchParams = useSearchParams();
-  const query = searchParams.get("topic") || "";
 
-  const [searchQuery, setSearchQuery] = useState("");
+  const query = searchParams.get("topic") || "";
+  const [searchQuery, setSearchQuery] = useState(query);
 
   useEffect(() => {
-    const delayDebounceFn = setTimeout(() => {
+    setSearchQuery(searchParams.get("topic") || "");
+  }, [searchParams]);
+
+  useEffect(() => {
+    const delay = setTimeout(() => {
+      const current = searchParams.get("topic") || "";
+
+      if (searchQuery === current) return;
+
       if (searchQuery) {
         const newUrl = formUrlQuery({
           params: searchParams.toString(),
@@ -24,33 +31,31 @@ const SearchInput = () => {
           value: searchQuery,
         });
 
-        router.push(newUrl, { scroll: false });
+        router.replace(newUrl, { scroll: false });
       } else {
-        if (pathname === "/companions") {
-          const newUrl = removeKeysFromUrlQuery({
-            params: searchParams.toString(),
-            keysToRemove: ["topic"],
-          });
+        const newUrl = removeKeysFromUrlQuery({
+          params: searchParams.toString(),
+          keysToRemove: ["topic"],
+        });
 
-          router.push(newUrl, { scroll: false });
-        }
+        router.replace(newUrl, { scroll: false });
       }
     }, 500);
-  }, [searchQuery, searchParams, router, pathname]);
+
+    return () => clearTimeout(delay);
+  }, [searchQuery, searchParams, router]);
 
   return (
-    <div className="relative items-center flex gap-2 px-2 py-1 h-fit">
-      <InputGroup>
-        <InputGroupInput
-          placeholder="Search companions..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-        />
-        <InputGroupAddon>
-          <Search />
-        </InputGroupAddon>
-      </InputGroup>
-    </div>
+    <InputGroup className="w-full">
+      <InputGroupInput
+        placeholder="Search companions..."
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
+      />
+      <InputGroupAddon>
+        <Search />
+      </InputGroupAddon>
+    </InputGroup>
   );
 };
 

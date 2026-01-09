@@ -22,9 +22,9 @@ const CompanionsPage = async ({
 
   return (
     <main className="flex items-center justify-center mx-auto px-14 flex-col gap-8 bg-background h-full max-w-350 pt-10 max-sm:px-2 mb-5">
-      <section className="flex justify-between gap-4 max-sm:flex-col">
+      <section className="flex w-full justify-between gap-4 max-sm:flex-col">
         <h1 className="text-3xl font-bold">Companion Library</h1>
-        <div className="flex gap-4">
+        <div className="flex gap-4 w-1/2">
           <SearchInput />
           <SubjectFilter />
         </div>
