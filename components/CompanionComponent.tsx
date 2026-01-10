@@ -1,8 +1,9 @@
 "use client";
 
 import { cn } from "@/lib/utils";
+import { vapi } from "@/lib/vapi.sdk";
 import { CallStatus } from "@/types/callStatus";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const CompanionComponent = ({
   companionId,
@@ -15,6 +16,38 @@ const CompanionComponent = ({
   voice,
 }: CompanionComponentProps) => {
   const [callStatus, setcallStatus] = useState<CallStatus>(CallStatus.INACTIVE);
+  const [isSpeaking, setisSpeaking] = useState(false);
+
+  useEffect(() => {
+    const onCallStart = () => setcallStatus(CallStatus.ACTIVE);
+
+    const onCallEnd = () => setcallStatus(CallStatus.ENDED);
+
+    const onMessage = () => {};
+
+    const onSpeechStart = () => setisSpeaking(true);
+    const onSpeechEnd = () => setisSpeaking(false);
+
+    const onError = (error: Error) => {
+      console.log(error);
+    };
+
+    vapi.on("call-start", onCallStart);
+    vapi.on("call-end", onCallEnd);
+    vapi.on("message", onMessage);
+    vapi.on("error", onError);
+    vapi.on("speech-start", onSpeechStart);
+    vapi.on("speech-end", onSpeechEnd);
+
+    return () => {
+      vapi.on("call-start", onCallStart);
+      vapi.off("call-end", onCallEnd);
+      vapi.off("message", onMessage);
+      vapi.off("error", onError);
+      vapi.off("speech-start", onSpeechStart);
+      vapi.off("speech-end", onSpeechEnd);
+    };
+  }, []);
 
   return (
     <section className="flex flex-col h-[70vh]">
