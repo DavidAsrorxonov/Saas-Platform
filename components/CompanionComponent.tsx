@@ -1,6 +1,6 @@
 "use client";
 
-import { cn } from "@/lib/utils";
+import { cn, configureAssistant } from "@/lib/utils";
 import { vapi } from "@/lib/vapi.sdk";
 import { CallStatus } from "@/types/callStatus";
 import Image from "next/image";
@@ -75,16 +75,35 @@ const CompanionComponent = ({
     setisMuted(!isMuted);
   };
 
-  const handleDisconnect = async () => {};
+  const handleDisconnect = async () => {
+    setcallStatus(CallStatus.ENDED);
+    vapi.stop();
+  };
 
-  const handleCall = async () => {};
+  const handleCall = async () => {
+    setcallStatus(CallStatus.CONNECTING);
+
+    const assistantOverrides = {
+      variableValues: {
+        subject,
+        topic,
+        style,
+      },
+    };
+
+    vapi.start(configureAssistant(voice, style), assistantOverrides);
+  };
 
   return (
     <section className="flex flex-col h-[70vh]">
       <section className="flex gap-8 max-sm:flex-col">
         <Card className="w-2/3 max-sm:w-full">
           <CardContent className="flex flex-col items-center justify-center gap-6 p-6">
-            <div className="relative size-72 max-sm:size-28 flex items-center justify-center rounded-xl bg-primary">
+            <div
+              className={`relative size-72 max-sm:size-28 flex items-center justify-center rounded-xl bg-muted ${
+                callStatus === CallStatus.ACTIVE ? "bg-muted" : "bg-primary"
+              }`}
+            >
               <div
                 className={cn(
                   "absolute transition-opacity duration-700",
