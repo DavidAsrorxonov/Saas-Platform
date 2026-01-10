@@ -42,7 +42,12 @@ const CompanionSession = async ({ params }: CompanionSessionPageProps) => {
         </CardHeader>
       </Card>
 
-      <CompanionComponent />
+      <CompanionComponent
+        {...companion}
+        companionId={id}
+        userName={user.firstName}
+        userImage={user.imageUrl}
+      />
     </main>
   );
 };

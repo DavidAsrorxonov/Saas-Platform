@@ -1,6 +1,15 @@
 import React from "react";
 
-const CompanionComponent = () => {
+const CompanionComponent = ({
+  companionId,
+  subject,
+  topic,
+  name,
+  userName,
+  userImage,
+  style,
+  voice,
+}: CompanionComponentProps) => {
   return (
     <section className="flex flex-col h-[70vh]">
       <section className="flex gap-8 max-sm:flex-col">
