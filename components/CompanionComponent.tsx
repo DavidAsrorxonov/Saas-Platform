@@ -25,6 +25,7 @@ const CompanionComponent = ({
   const [callStatus, setcallStatus] = useState<CallStatus>(CallStatus.INACTIVE);
   const [isSpeaking, setisSpeaking] = useState(false);
   const [isMuted, setisMuted] = useState(false);
+  const [messages, setMessages] = useState<SavedMessage[]>([]);
 
   const lottieRef = useRef<LottieRefCurrentProps>(null);
 
