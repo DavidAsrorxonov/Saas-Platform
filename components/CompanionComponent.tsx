@@ -44,7 +44,23 @@ const CompanionComponent = ({
 
     const onCallEnd = () => setcallStatus(CallStatus.ENDED);
 
-    const onMessage = () => {};
+    const onMessage = (message: any) => {
+      console.log("VAPI MESSAGE:", message);
+
+      if (
+        message?.type === "transcript" &&
+        (message?.transcriptType === "final" || message?.isFinal === true) &&
+        typeof message?.transcript === "string"
+      ) {
+        setMessages((prev) => [
+          ...prev,
+          {
+            role: message.role ?? "assistant",
+            content: message.transcript,
+          },
+        ]);
+      }
+    };
 
     const onSpeechStart = () => setisSpeaking(true);
     const onSpeechEnd = () => setisSpeaking(false);
@@ -61,7 +77,7 @@ const CompanionComponent = ({
     vapi.on("speech-end", onSpeechEnd);
 
     return () => {
-      vapi.on("call-start", onCallStart);
+      vapi.off("call-start", onCallStart);
       vapi.off("call-end", onCallEnd);
       vapi.off("message", onMessage);
       vapi.off("error", onError);
@@ -184,7 +200,25 @@ const CompanionComponent = ({
 
       <section className="relative flex flex-col gap-4 grow overflow-hidden">
         <div className="overflow-y-auto w-full flex flex-col gap-4 pr-2 h-full text-lg no-scrollbar">
-          MESSAGES
+          {messages.map((message) => {
+            if (message.role === "assistant") {
+              return (
+                <p key={message.content} className="max-sm:text-sm">
+                  {name.split(" ")[0].replace("/[.,]/g, ", "")}:{" "}
+                  {message.content}
+                </p>
+              );
+            } else {
+              return (
+                <p
+                  key={message.content}
+                  className="text-primary max-sm:text-sm"
+                >
+                  {userName}: {message.content}
+                </p>
+              );
+            }
+          })}
         </div>
 
         <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-40 bg-linear-to-t from-background via-background/90 to-transparent" />
